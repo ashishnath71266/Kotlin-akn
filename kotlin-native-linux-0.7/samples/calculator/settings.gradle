@@ -1,0 +1,8 @@
+include ':common'
+include ':jvm'
+include ':ios'
+
+if (System.getenv('ANDROID_HOME') != null) {
+    include ':android'
+}
+

@@ -1,0 +1,28 @@
+apply plugin: 'konan'
+
+konan.targets = ['macbook', 'linux']
+
+group 'org.jetbrains.kotlin.native'
+version '1.0'
+
+konanArtifacts {
+    interop('libcurl') {
+        target('linux') {
+            includeDirs.headerFilterOnly '/usr/include'
+        }
+        target('macbook') {
+            includeDirs.headerFilterOnly '/opt/local/include', '/usr/local/include'
+        }
+    }
+}
+
+apply plugin: 'maven-publish'
+def localMavenRepo="file://${new File(System.properties['user.home'] as String)}/.m2-kotlin-native"
+publishing {
+    repositories {
+        maven {
+            url = localMavenRepo
+        }
+    }
+}
+
